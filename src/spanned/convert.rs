@@ -29,8 +29,6 @@ use crate::spanned::{
 };
 
 mod decl {
-    use crate::spanned::dci;
-
     use super::*;
 
     impl<T> From<Decl<T>> for crate::decl::Decl<T> {
