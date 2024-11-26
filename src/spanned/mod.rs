@@ -12,6 +12,10 @@ use stmt::Stmt;
 
 use crate::IntoAllocated;
 
+// dci
+mod dci;
+pub use dci::{Role, RoleBody};
+
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 

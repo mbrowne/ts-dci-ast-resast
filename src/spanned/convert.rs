@@ -24,9 +24,13 @@ use crate::spanned::{
     tokens::{AssignOp, BinaryOp, LogicalOp, UnaryOp, UpdateOp},
     Class, ClassBody, Dir, Func, FuncArg, FuncArgEntry, FuncBody, Ident, Program, ProgramPart,
     Slice, VarKind,
+    // dci
+    Role, RoleBody,
 };
 
 mod decl {
+    use crate::spanned::dci;
+
     use super::*;
 
     impl<T> From<Decl<T>> for crate::decl::Decl<T> {
@@ -38,6 +42,10 @@ mod decl {
                 ),
                 Decl::Func(inner) => crate::decl::Decl::Func(inner.into()),
                 Decl::Class(c) => crate::decl::Decl::Class(c.into()),
+
+                // dci
+                Decl::Role(r) => crate::decl::Decl::Role(r.into()),
+
                 Decl::Import { import, .. } => {
                     crate::decl::Decl::Import(Box::new((*import).into()))
                 }
@@ -662,6 +670,22 @@ impl<T> From<Class<T>> for crate::Class<T> {
 
 impl<T> From<ClassBody<T>> for crate::ClassBody<T> {
     fn from(other: ClassBody<T>) -> Self {
+        Self(other.props.into_iter().map(From::from).collect())
+    }
+}
+
+// dci
+impl<T> From<Role<T>> for crate::Role<T> {
+    fn from(other: Role<T>) -> Self {
+        Self {
+            id: other.id.map(From::from),
+            body: other.body.into(),
+        }
+    }
+}
+
+impl<T> From<RoleBody<T>> for crate::RoleBody<T> {
+    fn from(other: RoleBody<T>) -> Self {
         Self(other.props.into_iter().map(From::from).collect())
     }
 }

@@ -130,6 +130,7 @@ define_token!(New, "new");
 define_token!(Null, "null");
 define_token!(Of, "of");
 define_token!(Return, "return");
+define_token!(Role, "role"); // dci
 define_token!(Set, "set");
 define_token!(Static, "static");
 define_token!(Super, "super");

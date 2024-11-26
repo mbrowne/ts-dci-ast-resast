@@ -4,6 +4,11 @@ pub mod pat;
 pub mod spanned;
 pub mod stmt;
 
+// dci
+pub mod dci;
+
+pub use dci::{Role,RoleBody};
+
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
@@ -488,6 +493,11 @@ pub mod prelude {
     };
     pub use crate::{
         AssignOp, BinaryOp, Class, ClassBody, Dir, Func, FuncArg, FuncBody, Ident, LogicalOp,
-        Program, ProgramPart, PropKind, UnaryOp, UpdateOp, VarKind,
+        Program, ProgramPart, PropKind, UnaryOp, UpdateOp, VarKind
+    };
+    // dci
+    pub use crate::dci::{
+        // dci
+        Role, RoleBody
     };
 }

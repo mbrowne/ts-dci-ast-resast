@@ -1,7 +1,7 @@
 use crate::spanned::expr::{Expr, Lit};
 use crate::spanned::pat::Pat;
 use crate::spanned::VarKind;
-use crate::spanned::{Class, Func, Ident};
+use crate::spanned::{Class, Role, Func, Ident}; // dci - modified
 use crate::IntoAllocated;
 
 use super::tokens::{
@@ -36,6 +36,12 @@ pub enum Decl<T> {
     /// class Thing {}
     /// ```
     Class(Class<T>),
+    // dci
+    /// A role declaration
+    /// ```js
+    /// role Thing {}
+    /// ```
+    Role(Role<T>),
     /// An import declaration
     /// ```js
     /// import * as moment from 'moment';
@@ -68,6 +74,7 @@ where
             },
             Decl::Func(f) => Decl::Func(f.into_allocated()),
             Decl::Class(c) => Decl::Class(c.into_allocated()),
+            Decl::Role(c) => Decl::Role(c.into_allocated()), // dci
             Decl::Import { import, semi_colon } => Decl::Import {
                 import: import.into_allocated(),
                 semi_colon,
@@ -94,6 +101,7 @@ impl<T> Node for Decl<T> {
             }
             Decl::Func(inner) => inner.loc(),
             Decl::Class(inner) => inner.loc(),
+            Decl::Role(inner) => inner.loc(), // dci
             Decl::Import { import, semi_colon } => {
                 if let Some(semi) = semi_colon {
                     return SourceLocation {

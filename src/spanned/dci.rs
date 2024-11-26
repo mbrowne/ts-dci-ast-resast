@@ -3,7 +3,9 @@ use crate::expr::Prop;
 use crate::IntoAllocated;
 use crate::spanned::{
     tokens,
-    tokens::{CloseBrace, OpenBrace, Token}
+    tokens::{
+        CloseBrace, OpenBrace, Token,
+    }
 };
 
 

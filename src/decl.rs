@@ -3,6 +3,9 @@ use crate::pat::Pat;
 use crate::{Class, Func, Ident};
 use crate::{IntoAllocated, VarKind};
 
+// dci
+use crate::dci::Role;
+
 #[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
@@ -27,6 +30,12 @@ pub enum Decl<T> {
     /// class Thing {}
     /// ```
     Class(Class<T>),
+    // dci
+    /// A role declaration
+    /// ```js
+    /// class Thing {}
+    /// ```
+    Role(Role<T>),
     /// An import declaration
     /// ```js
     /// import * as moment from 'moment';
@@ -53,6 +62,7 @@ where
             }
             Decl::Func(inner) => Decl::Func(inner.into_allocated()),
             Decl::Class(inner) => Decl::Class(inner.into_allocated()),
+            Decl::Role(inner) => Decl::Role(inner.into_allocated()), // dci
             Decl::Import(inner) => Decl::Import(inner.into_allocated()),
             Decl::Export(inner) => Decl::Export(inner.into_allocated()),
         }
